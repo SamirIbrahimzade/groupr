@@ -19,7 +19,7 @@ public class MainPage extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         // starting from one of the fragments
-        
+
         // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new PostFragment()).commit();
 
     }
