@@ -23,6 +23,7 @@ public class MainPage extends AppCompatActivity {
 
          getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new NewsFragment()).commit();
 
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -34,6 +35,9 @@ public class MainPage extends AppCompatActivity {
                     Fragment selectedFragment = new NewsFragment();
 
                     switch (item.getItemId()){
+                        case R.id.nav_news:
+                            selectedFragment = new NewsFragment();
+                            break;
                         case R.id.nav_addPost:
                             selectedFragment = new PostFragment();
                             break;
