@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "721641194143",
+    "firebase_url": "https://groupr-afd1e.firebaseio.com",
+    "project_id": "groupr-afd1e",
+    "storage_bucket": "groupr-afd1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721641194143:android:a29678102a7f42dc",
+        "android_client_info": {
+          "package_name": "com.groupr.groupr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721641194143-k1e0dsj0thm8tc2ndt5uc2nu56lg1ln6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpR-SWNtnRecf55S0mOmu3B7w4tj981YQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
