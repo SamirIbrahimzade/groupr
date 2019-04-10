@@ -19,14 +19,8 @@ public class NewsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.news_fragment,container,false);
 
-        button1 = view.findViewById(R.id.bt11);
 
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(),FirstPage.class));
-            }
-        });
+
 
 
       return view;
