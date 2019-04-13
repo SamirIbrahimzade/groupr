@@ -1,5 +1,6 @@
 package com.groupr.groupr;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -33,6 +34,8 @@ public class GroupDialog extends DialogFragment{
         join = view.findViewById(R.id.button2);
         rel2 = view.findViewById(R.id.rel2);
         joinButton = view.findViewById(R.id.button4);
+
+        //setCancelable(false);
 
 
         et1.setVisibility(View.INVISIBLE);

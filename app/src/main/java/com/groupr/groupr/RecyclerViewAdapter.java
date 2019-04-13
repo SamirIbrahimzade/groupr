@@ -21,12 +21,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private static final String TAG = "RecyclerViewAdapter";
 
     private ArrayList<String> mImageNames = new ArrayList<>();
-    private ArrayList<String> mImages = new ArrayList<>();
+    private ArrayList<String> mContent = new ArrayList<>();
+    private ArrayList<String> mGroupNames = new ArrayList<>();
     private Context mContext;
 
-    public RecyclerViewAdapter(Context context,ArrayList<String> imageNames, ArrayList<String> images ){
+    public RecyclerViewAdapter(Context context,ArrayList<String> imageNames, ArrayList<String> contents,ArrayList<String> gnames){
         mImageNames = imageNames;
-        mImages = images ;
+        mContent = contents ;
+        mGroupNames = gnames;
         mContext = context;
     }
     @NonNull
@@ -42,7 +44,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         Log.d(TAG,"onBindViewHolder: called.");
 
-        Glide.with(mContext).asBitmap().load(mImages.get(position)).into(holder.image);
+       // Glide.with(mContext).asBitmap().load(mImages.get(position)).into(holder.image);
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,13 +62,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        CircleImageView image;
-        TextView imageName;
+        //CircleImageView image;
+        TextView username;
+        TextView contentt;
+        TextView grnames;
         RelativeLayout parentLayout;
         public ViewHolder(View itemView){
             super(itemView);
-            image = itemView.findViewById(R.id.pp);
-            imageName = itemView.findViewById(R.id.usname);
+            username = itemView.findViewById(R.id.usname);
+            contentt = itemView.findViewById(R.id.content);
+            grnames = itemView.findViewById(R.id.grname);
             parentLayout = itemView.findViewById(R.id.items_layout);
         }
     }

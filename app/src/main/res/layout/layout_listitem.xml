@@ -4,21 +4,36 @@
     android:id="@+id/items_layout"
     >
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:id="@+id/pp"
-        android:src="@mipmap/ic_launcher"
-        />
-
     <TextView
         android:id="@+id/usname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/pp"
+
         android:text="Example User"
         android:textAlignment="center"
         android:textSize="25sp"
+        android:paddingTop="15dp"
 
+        />
+    <TextView
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/usname"
+        android:text="content"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:id="@+id/content"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Group"
+        android:layout_below="@+id/content"
+        android:id="@+id/grname"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:paddingBottom="15dp"
         />
 </RelativeLayout>

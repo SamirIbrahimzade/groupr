@@ -14,8 +14,7 @@ import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment {
 
-    private ArrayList<String> mNames = new ArrayList<>();
-    private ArrayList<String> mImageUrl = new ArrayList<>();
+
 
     @Nullable
     @Override
@@ -24,14 +23,5 @@ public class ProfileFragment extends Fragment {
 
 
     }
-    private void initImageBitmaps(){
 
-
-    }
-    private void initRecyclerView(){
-        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(),mNames,mImageUrl);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
 }
