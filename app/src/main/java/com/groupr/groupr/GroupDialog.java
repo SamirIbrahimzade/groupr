@@ -1,6 +1,7 @@
 package com.groupr.groupr;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ public class GroupDialog extends DialogFragment{
     EditText et1;
     Button join;
     Button joinButton;
+    Button create;
     RelativeLayout rel2;
     @Nullable
     @Override
@@ -34,8 +36,16 @@ public class GroupDialog extends DialogFragment{
         join = view.findViewById(R.id.button2);
         rel2 = view.findViewById(R.id.rel2);
         joinButton = view.findViewById(R.id.button4);
-
+        create = view.findViewById(R.id.button3);
         //setCancelable(false);
+
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(getContext(),CreateGroup.class));
+            }
+        });
 
 
         et1.setVisibility(View.INVISIBLE);
