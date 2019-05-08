@@ -1,10 +1,13 @@
 package bilkent.grouper.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +25,16 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.groupr.groupr.R;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import bilkent.grouper.activities.LoginActivity;
 import bilkent.grouper.activities.MainActivity;
+import bilkent.grouper.classes.User;
 
 public class RegisterFragment extends DialogFragment {
 
@@ -35,6 +45,7 @@ public class RegisterFragment extends DialogFragment {
     private EditText passwordText;
     private EditText confirmPasswordText;
     private Button register;
+    private CardView signOut;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,7 +58,7 @@ public class RegisterFragment extends DialogFragment {
         passwordText = view.findViewById(R.id.registerPassword);
         confirmPasswordText = view.findViewById(R.id.registerConfirmPassword);
         register = view.findViewById(R.id.completeRegister);
-
+        signOut = view.findViewById(R.id.signOut);
 
         // register clicked
         register.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +73,15 @@ public class RegisterFragment extends DialogFragment {
                     else
                         completeRegistration(emailText.getText().toString(), passwordText.getText().toString(), usernameText.getText().toString());
                 }
+            }
+        });
+
+        // signOut clicked
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getActivity(),LoginActivity.class));
             }
         });
         return view;
@@ -98,8 +118,14 @@ public class RegisterFragment extends DialogFragment {
                 if (task.isSuccessful()){
                     mAuth.signInWithEmailAndPassword(email,password);
                     FirebaseUser user = mAuth.getCurrentUser();
-                    if (user != null)
-                        user.updateProfile(new UserProfileChangeRequest.Builder().setDisplayName(username).build());
+                    if (user != null){
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(username).build();
+                        user.updateProfile(profileUpdates);
+
+                    }
+                    User newUser = new User(username, user.getUid());
+                    saveUserCredentials(newUser);
                     startActivity(new Intent(getActivity(), MainActivity.class));
                 }
                 else {
@@ -120,6 +146,19 @@ public class RegisterFragment extends DialogFragment {
                 }
             }
         });
+    }
+
+    private void saveUserCredentials(User user) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> newUser = new HashMap<>();
+        newUser.put("Username", user.getDisplayName());
+        newUser.put("ID", user.getID());
+        newUser.put("Groups", null);
+        newUser.put("Upcoming Meetings", null);
+        DocumentReference userRef = db.collection("Users").document(user.getID());
+        userRef.set(newUser);
+        SharedPreferences.Editor sharedPreferences = getContext().getSharedPreferences(LoginActivity.USER_PREFERENCES, Context.MODE_PRIVATE).edit();
+        sharedPreferences.putString(LoginActivity.USERNAME,user.getDisplayName()).apply();
     }
 
 

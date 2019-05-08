@@ -9,8 +9,6 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.groupr.groupr.R;
 
 public class CreateGroup extends AppCompatActivity {
@@ -19,7 +17,6 @@ public class CreateGroup extends AppCompatActivity {
     EditText p1;
     EditText p2;
     Button submit;
-    private DatabaseReference mDatabase;
 
 
     @Override
@@ -48,8 +45,6 @@ public class CreateGroup extends AppCompatActivity {
 
     public void createGroup(FirebaseUser user, String name,String password,String passwordCheck){
         if(password.equals(passwordCheck)){
-            mDatabase = FirebaseDatabase.getInstance().getReference();
-            mDatabase.setValue(name);
         }
         else{
             Toast.makeText(CreateGroup.this,"Passwords are different", Toast.LENGTH_LONG).show();

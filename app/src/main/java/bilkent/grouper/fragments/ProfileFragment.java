@@ -1,5 +1,6 @@
 package bilkent.grouper.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.groupr.groupr.R;
+
+import bilkent.grouper.activities.LoginActivity;
 
 public class ProfileFragment extends Fragment {
 
@@ -31,6 +34,8 @@ public class ProfileFragment extends Fragment {
         username = view.findViewById(R.id.profileUsername);
         groups = view.findViewById(R.id.profileGroups);
 
+        // set credentials
+        setUserCredentials();
         // profile picture click handler
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +44,10 @@ public class ProfileFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void setUserCredentials() {
+        username.setText(getContext().getSharedPreferences(LoginActivity.USER_PREFERENCES, Context.MODE_PRIVATE).getString(LoginActivity.USERNAME, "Username"));
     }
 
 }
