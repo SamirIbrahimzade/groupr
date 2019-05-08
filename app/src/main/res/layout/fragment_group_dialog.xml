@@ -5,7 +5,7 @@
     android:id="@+id/rel1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.groupr.groupr.MainPage">
+    tools:context="bilkent.grouper.activities.MainActivity">
 
     <RelativeLayout
         android:id="@+id/rel2"

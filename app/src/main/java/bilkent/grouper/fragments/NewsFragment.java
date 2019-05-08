@@ -1,6 +1,5 @@
-package com.groupr.groupr;
+package bilkent.grouper.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import bilkent.grouper.classes.RecyclerViewAdapter;
+import com.groupr.groupr.R;
 
 import java.util.ArrayList;
 

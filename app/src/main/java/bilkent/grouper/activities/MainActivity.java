@@ -1,21 +1,24 @@
-package com.groupr.groupr;
+package bilkent.grouper.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-public class MainPage extends AppCompatActivity {
+import bilkent.grouper.classes.GroupDialog;
+import bilkent.grouper.fragments.NewsFragment;
+import bilkent.grouper.fragments.ProfileFragment;
+import com.groupr.groupr.R;
+
+public class MainActivity extends AppCompatActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_page);
+        setContentView(R.layout.activity_main);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -38,9 +41,7 @@ public class MainPage extends AppCompatActivity {
                         case R.id.nav_news:
                             selectedFragment = new NewsFragment();
                             break;
-                        case R.id.nav_addPost:
-                            selectedFragment = new PostFragment();
-                            break;
+
                         case R.id.nav_groups:
                             GroupDialog dialog = new GroupDialog();
                             dialog.show(getSupportFragmentManager(),"GroupDialog");

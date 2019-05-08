@@ -1,4 +1,4 @@
-package com.groupr.groupr;
+package bilkent.grouper.classes;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,11 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.groupr.groupr.R;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "RecyclerViewAdapter";

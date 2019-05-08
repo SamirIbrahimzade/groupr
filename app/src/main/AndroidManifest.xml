@@ -15,16 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainPage"
+            android:name="bilkent.grouper.activities.MainActivity"
             android:label="groupr" />
-        <activity android:name=".FirstPage">
+        <activity android:name="bilkent.grouper.activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateGroup"></activity>
+        <activity android:name="bilkent.grouper.classes.CreateGroup" />
     </application>
 
 </manifest>

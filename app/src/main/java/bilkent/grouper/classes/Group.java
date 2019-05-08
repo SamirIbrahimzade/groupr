@@ -1,4 +1,4 @@
-package com.groupr.groupr;
+package bilkent.grouper.classes;
 
 public class Group {
 

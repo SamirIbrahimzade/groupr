@@ -10,11 +10,11 @@
         android:icon="@drawable/ic_group_black_24dp"
         android:title="Group"
         ></item>
-    <item
-        android:id="@+id/nav_addPost"
-        android:icon="@drawable/ic_add_box_black_24dp"
-        android:title="Post"
-        ></item>
+    <!--<item-->
+        <!--android:id="@+id/nav_addPost"-->
+        <!--android:icon="@drawable/ic_add_box_black_24dp"-->
+        <!--android:title="Post"-->
+        <!--&gt;</item>-->
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_account_box_black_24dp"

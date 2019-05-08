@@ -17,4 +17,20 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="complete_registration">Complete Registration</string>
+    <string name="username">Username</string>
+
+
+
+    <!-- Register Fragment -->
+    <string name="passwords_not_match">Passwords do not match!</string>
+    <string name="complete">Please complete</string>
+
+    <!-- Error Handling -->
+    <string name="error_user_exists">Email in use!</string>
+    <string name="error_weak_password">Weak password entered. Try to use symbols (.,/ etc.) and numbers(0,1,2,3 etc.)!</string>
+    <string name="my_groups">My Groups</string>
 </resources>

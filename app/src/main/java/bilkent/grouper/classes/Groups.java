@@ -1,6 +1,5 @@
-package com.groupr.groupr;
+package bilkent.grouper.classes;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 
 public class Groups {
