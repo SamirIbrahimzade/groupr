@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import bilkent.grouper.classes.GroupDialog;
+import bilkent.grouper.fragments.GroupFragment;
 import bilkent.grouper.fragments.NewsFragment;
 import bilkent.grouper.fragments.ProfileFragment;
 import com.groupr.groupr.R;
@@ -43,9 +43,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
 
                         case R.id.nav_groups:
-                            GroupDialog dialog = new GroupDialog();
-                            dialog.show(getSupportFragmentManager(),"GroupDialog");
-                            selectedFragment = oldFragment;
+                            selectedFragment = new GroupFragment();
                             break;
                         case R.id.nav_profile:
                             selectedFragment = new ProfileFragment();

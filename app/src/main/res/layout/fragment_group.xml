@@ -14,24 +14,22 @@
         android:layout_weight="1"
         android:background="@color/colorPrimary"
         android:gravity="center"
-        android:text="My Groups" />
+        android:text="@string/my_groups" />
 
     <Button
         android:id="@+id/groupsFragmentJoin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/colorAccent"
+        android:background="@android:color/holo_red_dark"
         android:gravity="center"
-        android:text="Join Group" />
-
+        android:text="@string/join_group" />
     <Button
-        android:id="@+id/groupsFragmentCreate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/new_group"
         android:layout_weight="1"
-        android:background="@android:color/holo_green_dark"
-        android:text="New Group" />
+        android:background="@android:color/holo_green_dark"/>
 
 
 </LinearLayout>

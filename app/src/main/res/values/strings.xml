@@ -32,5 +32,8 @@
     <!-- Error Handling -->
     <string name="error_user_exists">Email in use!</string>
     <string name="error_weak_password">Weak password entered. Try to use symbols (.,/ etc.) and numbers(0,1,2,3 etc.)!</string>
+    <string name="group_id">Group ID</string>
+    <string name="join_group">Join Group</string>
+    <string name="new_group">New Group</string>
     <string name="my_groups">My Groups</string>
 </resources>
