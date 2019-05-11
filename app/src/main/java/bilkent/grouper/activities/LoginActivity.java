@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,16 +21,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.groupr.groupr.R;
 
 import bilkent.grouper.classes.User;
-import bilkent.grouper.fragments.RegisterFragment;
+import bilkent.grouper.dialogs.RegisterFragment;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -91,7 +87,6 @@ public class LoginActivity extends AppCompatActivity {
         ft.addToBackStack(null);
         RegisterFragment dialogFragment = new RegisterFragment ();
         dialogFragment.show(ft,"Register Dialog");
-
     }
 
     @Override
@@ -134,11 +129,15 @@ public class LoginActivity extends AppCompatActivity {
                         userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                User user = documentSnapshot.toObject(User.class);
-                                SharedPreferences.Editor editor = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE).edit().putString(USERNAME, user.getDisplayName());
+                                String username = (String) documentSnapshot.get("Username");
+                                SharedPreferences.Editor editor = getSharedPreferences(USER_PREFERENCES, MODE_PRIVATE).edit().putString(USERNAME, username);
                                 editor.apply();
+
+                                currentUser = new User(username, mAuth.getCurrentUser().getUid());
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }
                         });
+
                     }
                 }
             });

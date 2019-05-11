@@ -41,4 +41,7 @@
     <string name="my_groups">My Groups</string>
     <string name="error_unexpected">Unexpected error</string>
     <string name="sign_out">Sign Out</string>
+    <string name="create_group">Create Group</string>
+    <string name="enter_group_name">Enter Group Name...</string>
+    <string name="successfully_created">New Group has been succesfully initialized</string>
 </resources>

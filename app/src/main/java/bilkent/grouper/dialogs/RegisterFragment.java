@@ -1,4 +1,4 @@
-package bilkent.grouper.fragments;
+package bilkent.grouper.dialogs;
 
 import android.content.Context;
 import android.content.Intent;
@@ -45,7 +45,6 @@ public class RegisterFragment extends DialogFragment {
     private EditText passwordText;
     private EditText confirmPasswordText;
     private Button register;
-    private CardView signOut;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,7 +57,6 @@ public class RegisterFragment extends DialogFragment {
         passwordText = view.findViewById(R.id.registerPassword);
         confirmPasswordText = view.findViewById(R.id.registerConfirmPassword);
         register = view.findViewById(R.id.completeRegister);
-        signOut = view.findViewById(R.id.signOut);
 
         // register clicked
         register.setOnClickListener(new View.OnClickListener() {
@@ -73,15 +71,6 @@ public class RegisterFragment extends DialogFragment {
                     else
                         completeRegistration(emailText.getText().toString(), passwordText.getText().toString(), usernameText.getText().toString());
                 }
-            }
-        });
-
-        // signOut clicked
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getActivity(),LoginActivity.class));
             }
         });
         return view;

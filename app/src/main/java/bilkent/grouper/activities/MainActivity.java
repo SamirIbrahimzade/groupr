@@ -5,8 +5,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import bilkent.grouper.dialogs.NavigationDrawer;
 import bilkent.grouper.fragments.GroupFragment;
 import bilkent.grouper.fragments.NewsFragment;
 import bilkent.grouper.fragments.ProfileFragment;
@@ -27,6 +30,27 @@ public class MainActivity extends AppCompatActivity {
          getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new NewsFragment()).commit();
 
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_navigation,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.nav_bar)
+            openNavigationDrawer();
+        return true;
+    }
+
+    private void openNavigationDrawer() {
+        // TODO
+        Toast.makeText(getApplicationContext(),"Nav bar icon clicked", Toast.LENGTH_SHORT).show();
+        NavigationDrawer navigationDrawer = new NavigationDrawer();
+        navigationDrawer.show(getSupportFragmentManager(),"Navigation Drawer");
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -55,5 +79,4 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
-
 }
