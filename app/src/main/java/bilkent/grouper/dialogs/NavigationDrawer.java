@@ -1,6 +1,8 @@
 package bilkent.grouper.dialogs;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,6 +29,7 @@ public class NavigationDrawer extends DialogFragment {
 
             }
         });
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return view;
     }
 

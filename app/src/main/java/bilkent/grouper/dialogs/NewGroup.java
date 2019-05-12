@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +47,7 @@ import bilkent.grouper.classes.Group;
 
 import static android.app.Activity.RESULT_OK;
 
-public class NewGroup extends DialogFragment {
+public class NewGroup extends DialogFragment implements View.OnClickListener {
 
 
     // variables
@@ -71,39 +72,63 @@ public class NewGroup extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_create_group,container,false);
 
         // initialize views
-        choosePhoto = view.findViewById(R.id.newGroupDialogChoosePhoto);
         photo = view.findViewById(R.id.createGroupImage);
         groupName = view.findViewById(R.id.createGroupName);
         createGroup = view.findViewById(R.id.createGroupButton);
 
+        return view;
+    }
 
-        // photo clicked
-        photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFileChooser();
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath);
+                photo.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
+        }
+    }
 
-        // create group clicked
-        createGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final ProgressBar progressBar = new ProgressBar(getContext());
-                progressBar.setProgress(0);
-                if (TextUtils.isEmpty(groupName.getText().toString()))
-                    groupName.setError(getString(R.string.complete));
-                else {
-                    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-                    final DocumentReference documentReference = firebaseFirestore.collection("Groups").document(id);
-                    final DocumentReference userGroupsRef = firebaseFirestore.collection("Users").document(LoginActivity.currentUser.getID());
-                    if (filePath != null){
-                        final StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Groups").child(id).child("Group Photo").child(id);
-                        storageReference.putFile(filePath)
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.newGroupAdd:
+                showFileChooser();
+            case R.id.createGroupImage:
+                showFileChooser();
+            case R.id.createGroupButton:
+                createGroup();
+        }
+    }
+
+    private void createGroup() {
+        if (TextUtils.isEmpty(groupName.getText().toString()))
+            groupName.setError(getString(R.string.complete));
+        else {
+            final LoadingDialog loadingDialog = new LoadingDialog();
+            loadingDialog.show(getActivity().getSupportFragmentManager(),"Loading Dialog");
+            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+            final DocumentReference documentReference = firebaseFirestore.collection("Groups").document(id);
+            final DocumentReference userGroupsRef = firebaseFirestore.collection("Users").document(LoginActivity.currentUser.getID());
+            if (filePath != null){
+                final StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Groups").child(id).child("Group Photo").child(id);
+                storageReference.putFile(filePath)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                progressBar.setVisibility(View.INVISIBLE);
                                 Toast.makeText(getContext(), getString(R.string.successfully_created),Toast.LENGTH_SHORT).show();
                                 userGroupsRef.update("Groups", FieldValue.arrayUnion(id));
                                 final Group newGroup = new Group();
@@ -123,13 +148,14 @@ public class NewGroup extends DialogFragment {
                                     }
                                 });
                                 Toast.makeText(getContext(),getString(R.string.successfully_created),Toast.LENGTH_SHORT).show();
+                                loadingDialog.dismiss();
                                 dismiss();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                progressBar.setVisibility(View.INVISIBLE);
+                                loadingDialog.dismiss();
                                 Toast.makeText(getContext(), getString(R.string.error_unexpected), Toast.LENGTH_SHORT).show();;
                             }
                         })
@@ -137,47 +163,24 @@ public class NewGroup extends DialogFragment {
                             @Override
                             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                                 int progress = (int) ((100 * taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount());
-                                progressBar.setProgress(progress);
+                                loadingDialog.setProgress(progress);
                             }
                         });
-                    }else {
-                        userGroupsRef.update("Groups", FieldValue.arrayUnion(id));
-                        Group newGroup = new Group();
-                        newGroup.setGroupName(groupName.getText().toString());
-                        newGroup.setCoordinatorIDs(Arrays.asList(LoginActivity.currentUser.getID()));
-                        newGroup.setMeetings(null);
-                        newGroup.setUserIDs(Arrays.asList(LoginActivity.currentUser.getID()));
-                        newGroup.setPostIDs(null);
-                        newGroup.setPhoto(null);
-                        documentReference.set(newGroup);
-                        Toast.makeText(getContext(),getString(R.string.successfully_created),Toast.LENGTH_SHORT).show();
-                        dismiss();
-                    }
-                }
-            }
-        });
-        return view;
-    }
-
-    private void showFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_VIEW);
-        startActivityForResult(Intent.createChooser(intent, "Select Group Photo"), PICK_IMAGE_REQUEST);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            filePath = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath);
-                photo.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
+            }else {
+                userGroupsRef.update("Groups", FieldValue.arrayUnion(id));
+                Group newGroup = new Group();
+                newGroup.setGroupName(groupName.getText().toString());
+                newGroup.setCoordinatorIDs(Arrays.asList(LoginActivity.currentUser.getID()));
+                newGroup.setMeetings(null);
+                newGroup.setUserIDs(Arrays.asList(LoginActivity.currentUser.getID()));
+                newGroup.setPostIDs(null);
+                newGroup.setPhoto(null);
+                documentReference.set(newGroup);
+                Toast.makeText(getContext(),getString(R.string.successfully_created),Toast.LENGTH_SHORT).show();
+                loadingDialog.dismiss();
+                dismiss();
             }
         }
     }
-
 }
+

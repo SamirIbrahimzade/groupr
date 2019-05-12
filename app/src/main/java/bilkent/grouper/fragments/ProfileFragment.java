@@ -13,13 +13,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.StorageReference;
+import com.google.firestore.v1.Document;
 import com.groupr.groupr.R;
 
-import bilkent.grouper.activities.LoginActivity;
+import java.util.ArrayList;
 
-public class ProfileFragment extends Fragment {
+import bilkent.grouper.activities.LoginActivity;
+import bilkent.grouper.classes.Group;
+import bilkent.grouper.dialogs.LoadingDialog;
+
+import static bilkent.grouper.activities.MainActivity.userGroups;
+
+public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     // variables
     private ImageView profilePic;
@@ -30,6 +46,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        LoadingDialog dialog = new LoadingDialog();
+        dialog.show(getActivity().getSupportFragmentManager(),"Loading Dialog");
         // initialize current view
         View view = inflater.inflate(R.layout.fragment_profile,container,false);
 
@@ -40,27 +58,48 @@ public class ProfileFragment extends Fragment {
         signOut = view.findViewById(R.id.signOut);
         // set credentials
         setUserCredentials();
-        // profile picture click handler
-        profilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
-
-        // sign out
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getActivity(),LoginActivity.class));
-            }
-        });
         return view;
     }
 
     private void setUserCredentials() {
         username.setText(getContext().getSharedPreferences(LoginActivity.USER_PREFERENCES, Context.MODE_PRIVATE).getString(LoginActivity.USERNAME, "Username"));
+        setGroups();
     }
 
+    private void setGroups() {
+        ArrayList<String>groupIDS = new ArrayList<>();
+        groupIDS = getGroups(getContext(), groupIDS);
+        Toast.makeText(getContext(),groupIDS.size() + " size", Toast.LENGTH_SHORT).show();
+    }
+
+    public static ArrayList<String> getGroups(final Context context, final ArrayList<String> groups) {
+        final ArrayList<String> groupsID = new ArrayList<>();
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        DocumentReference groupsRef = firebaseFirestore.collection("Users").document(LoginActivity.currentUser.getID());
+        groupsRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot documentSnapshot = task.getResult();
+                ArrayList<String> result = (ArrayList<String>) documentSnapshot.get("Groups");
+                for (String string: result){
+                    groupsID.add(string);
+                    groups.add(string);
+                    Toast.makeText(context,string + " String", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        return groupsID;
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.personalProfilePicture){
+
+        }else if (v.getId() == R.id.signOut){
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(getActivity(),LoginActivity.class));
+        }
+    }
 }

@@ -7,16 +7,23 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import bilkent.grouper.classes.Group;
 import bilkent.grouper.dialogs.NavigationDrawer;
 import bilkent.grouper.fragments.GroupFragment;
 import bilkent.grouper.fragments.NewsFragment;
 import bilkent.grouper.fragments.ProfileFragment;
 import com.groupr.groupr.R;
 
+import java.util.ArrayList;
+
+
 public class MainActivity extends AppCompatActivity {
 
+
+    public static ArrayList<Group> userGroups = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"Nav bar icon clicked", Toast.LENGTH_SHORT).show();
         NavigationDrawer navigationDrawer = new NavigationDrawer();
         navigationDrawer.show(getSupportFragmentManager(),"Navigation Drawer");
+        findViewById(R.id.bottom_navigation).setVisibility(View.INVISIBLE);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
