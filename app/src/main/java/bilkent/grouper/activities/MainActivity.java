@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
 
-    public static ArrayList<Group> userGroups = null;
+    public static ArrayList<Group> userGroups = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"Nav bar icon clicked", Toast.LENGTH_SHORT).show();
         NavigationDrawer navigationDrawer = new NavigationDrawer();
         navigationDrawer.show(getSupportFragmentManager(),"Navigation Drawer");
-        findViewById(R.id.bottom_navigation).setVisibility(View.INVISIBLE);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =

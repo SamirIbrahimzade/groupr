@@ -44,4 +44,6 @@
     <string name="create_group">Create Group</string>
     <string name="enter_group_name">Enter Group Name...</string>
     <string name="successfully_created">New Group has been succesfully initialized</string>
+    <string name="group_name">Group Name</string>
+    <string name="group_members">Group Members</string>
 </resources>

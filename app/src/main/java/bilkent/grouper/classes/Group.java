@@ -1,8 +1,5 @@
 package bilkent.grouper.classes;
 
-import android.net.Uri;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class Group {
@@ -10,7 +7,7 @@ public class Group {
     //properties
     private List<String> coordinatorIDs;
     private String groupName;
-    private List<String> userIDs;
+    private List<User> users;
     private List<String> postIDs;
     private List<Meeting> meetings;
     private String photo;
@@ -18,10 +15,10 @@ public class Group {
     public Group(){
     }
 
-    public Group(List<String> coordinatorIDs, String groupName, List<String> userIDs, List<String> postIDs, List<Meeting> meetings, String photo) {
+    public Group(List<String> coordinatorIDs, String groupName, List<User> users, List<String> postIDs, List<Meeting> meetings, String photo) {
         this.coordinatorIDs = coordinatorIDs;
         this.groupName = groupName;
-        this.userIDs = userIDs;
+        this.users = users;
         this.postIDs = postIDs;
         this.meetings = meetings;
         this.photo = photo;
@@ -43,12 +40,12 @@ public class Group {
         this.groupName = groupName;
     }
 
-    public List<String> getUserIDs() {
-        return userIDs;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUserIDs(List<String> userIDs) {
-        this.userIDs = userIDs;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public List<String> getPostIDs() {
@@ -73,5 +70,9 @@ public class Group {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public void addUser(User user){
+        users.add(user);
     }
 }

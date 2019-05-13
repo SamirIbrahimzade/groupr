@@ -8,7 +8,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,8 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +23,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,17 +33,14 @@ import com.google.firebase.storage.UploadTask;
 import com.groupr.groupr.R;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import bilkent.grouper.activities.LoginActivity;
 import bilkent.grouper.classes.Group;
 
 import static android.app.Activity.RESULT_OK;
 
-public class NewGroup extends DialogFragment implements View.OnClickListener {
+public class NewGroup extends DialogFragment {
 
 
     // variables
@@ -76,14 +69,25 @@ public class NewGroup extends DialogFragment implements View.OnClickListener {
         groupName = view.findViewById(R.id.createGroupName);
         createGroup = view.findViewById(R.id.createGroupButton);
 
+        photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFileChooser();
+            }
+        });
+
+        createGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createGroup();
+            }
+        });
         return view;
     }
 
     private void showFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
 
@@ -99,18 +103,6 @@ public class NewGroup extends DialogFragment implements View.OnClickListener {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.newGroupAdd:
-                showFileChooser();
-            case R.id.createGroupImage:
-                showFileChooser();
-            case R.id.createGroupButton:
-                createGroup();
         }
     }
 
@@ -135,7 +127,7 @@ public class NewGroup extends DialogFragment implements View.OnClickListener {
                                 newGroup.setGroupName(groupName.getText().toString());
                                 newGroup.setCoordinatorIDs(Arrays.asList(LoginActivity.currentUser.getID()));
                                 newGroup.setMeetings(null);
-                                newGroup.setUserIDs(Arrays.asList(LoginActivity.currentUser.getID()));
+                                newGroup.setUsers(Arrays.asList(LoginActivity.currentUser));
                                 newGroup.setPostIDs(null);
                                 final Uri[] downloadUri = new Uri[1];
                                 storageReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -143,7 +135,6 @@ public class NewGroup extends DialogFragment implements View.OnClickListener {
                                     public void onComplete(@NonNull Task<Uri> task) {
                                         downloadUri[0] = task.getResult();
                                         newGroup.setPhoto(downloadUri[0].toString());
-                                        Log.d("Tag",newGroup.getPhoto());
                                         documentReference.set(newGroup);
                                     }
                                 });
@@ -172,7 +163,7 @@ public class NewGroup extends DialogFragment implements View.OnClickListener {
                 newGroup.setGroupName(groupName.getText().toString());
                 newGroup.setCoordinatorIDs(Arrays.asList(LoginActivity.currentUser.getID()));
                 newGroup.setMeetings(null);
-                newGroup.setUserIDs(Arrays.asList(LoginActivity.currentUser.getID()));
+                newGroup.setUsers(Arrays.asList(LoginActivity.currentUser));
                 newGroup.setPostIDs(null);
                 newGroup.setPhoto(null);
                 documentReference.set(newGroup);
