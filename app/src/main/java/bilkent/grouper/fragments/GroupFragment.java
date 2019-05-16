@@ -39,6 +39,7 @@ public class GroupFragment extends Fragment {
 
 
     // variables
+    private ArrayList<String> groupIDs = new ArrayList<>();
     private Button myGroupsButton;
     private Button joinGroupButton;
     private Button newGroupButton;
@@ -100,5 +101,9 @@ public class GroupFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void setGroupIDs(ArrayList<String> groupIDs) {
+        this.groupIDs.addAll(groupIDs);
     }
 }

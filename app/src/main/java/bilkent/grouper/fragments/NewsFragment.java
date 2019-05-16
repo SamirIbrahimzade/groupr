@@ -21,6 +21,7 @@ public class NewsFragment extends Fragment {
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mContents = new ArrayList<>();
     private ArrayList<String> mgGroupNames = new ArrayList<>();
+    private ArrayList<String> groupIDs = new ArrayList<>();
     Button button1;
     @Nullable
     @Override
@@ -43,6 +44,10 @@ public class NewsFragment extends Fragment {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(),mNames,mContents,mgGroupNames);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    public void setGroupIDs(ArrayList<String> groupIDs){
+        this.groupIDs.addAll(groupIDs);
     }
 
 }

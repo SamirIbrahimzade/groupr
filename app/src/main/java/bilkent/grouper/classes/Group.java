@@ -5,12 +5,14 @@ import java.util.List;
 public class Group {
 
     //properties
+    private String groupID;
     private List<String> coordinatorIDs;
     private String groupName;
     private List<User> users;
     private List<String> postIDs;
     private List<Meeting> meetings;
     private String photo;
+
     //constructors
     public Group(){
     }
@@ -74,5 +76,13 @@ public class Group {
 
     public void addUser(User user){
         users.add(user);
+    }
+
+    public String getGroupID() {
+        return groupID;
+    }
+
+    public void setGroupID(String groupID) {
+        this.groupID = groupID;
     }
 }

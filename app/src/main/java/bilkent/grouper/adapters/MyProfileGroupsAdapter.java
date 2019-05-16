@@ -55,6 +55,7 @@ public class MyProfileGroupsAdapter extends RecyclerView.Adapter<MyProfileGroups
 
     public void addGroup(Group group){
         groups.add(group);
+        notifyDataSetChanged();
     }
 
     class GroupHolder extends RecyclerView.ViewHolder {

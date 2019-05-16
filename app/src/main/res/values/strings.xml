@@ -46,4 +46,9 @@
     <string name="successfully_created">New Group has been succesfully initialized</string>
     <string name="group_name">Group Name</string>
     <string name="group_members">Group Members</string>
+    <string name="all_groups">All Groups</string>
+    <string name="no_internet">No connection</string>
+    <string name="cancel_new_group">Group Creation has been cancelled</string>
+    <string name="check_internet">Please check your connection!</string>
+    <string name="no_photo">No photo chosen!</string>
 </resources>
